@@ -1,0 +1,10 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<h2>Add Image Feed</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload Image</button>
+</form>
+{% endblock %}
