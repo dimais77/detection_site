@@ -1,33 +1,36 @@
 {% extends "object_detection/base.html" %}
 
 {% block content %}
-<h2>Dashboard</h2>
-<a href="{% url 'object_detection:add_image_feed' %}" class="btn btn-primary mb-3">Add Image</a>
-
-{% for feed in image_feeds %}
-<div class="card mb-3">
-    <div class="card-header">
-        <a href="{% url 'object_detection:process_feed' feed.id %}" class="btn btn-secondary">Process Image</a>
+<h2 class="mb-4">Дашборд</h2>
+<a href="{% url 'object_detection:add_image_feed' %}" class="btn btn-primary mb-3">Добавить изображение</a>
+<div class="row">
+    {% for feed in image_feeds %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <a href="{% url 'object_detection:process_feed' feed.id %}" class="btn btn-secondary">Обработать</a>
+            </div>
+            <a href="{{ feed.image.url }}" target="_blank">
+                <img src="{{ feed.image.url }}" alt="Original Image" class="img-thumbnail" style="width: 50px; height: 50px;">
+            </a>
+            {% if feed.processed_image %}
+            <a href="{{ feed.processed_image.url }}" target="_blank">
+                <img src="{{ feed.processed_image.url }}" alt="Processed Image" class="img-thumbnail" style="width: 50px; height: 50px;">
+            </a>
+            <ul class="list-unstyled mt-2">
+                {% for obj in feed.detected_objects.all %}
+                <li>{{ obj.object_type }} - {{ obj.confidence|floatformat:2 }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <form action="{% url 'object_detection:delete_image' feed.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+        </div>
     </div>
-    <div class="card-body">
-        <a href="{{ feed.image.url }}" target="_blank">
-            <img src="{{ feed.image.url }}" alt="Original Image" style="width: 50px; height: 50px;">
-        </a>
-        {% if feed.processed_image %}
-        <a href="{{ feed.processed_image.url }}" target="_blank">
-            <img src="{{ feed.processed_image.url }}" alt="Processed Image" style="width: 50px; height: 50px;">
-        </a>
-        <ul>
-            {% for obj in feed.detected_objects.all %}
-            <li>{{ obj.object_type }} - {{ obj.confidence|floatformat:2 }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-    <form action="{% url 'object_detection:delete_image' feed.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-    </form>
+    {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}

@@ -10,5 +10,5 @@ class ImageFeedForm(forms.ModelForm):
             'image': forms.FileInput(attrs={'accept': 'image/*'}),
         }
         help_texts = {
-            'image': 'Upload an image file.',
+            'image': 'Загрузить файл с изображением',
         }
