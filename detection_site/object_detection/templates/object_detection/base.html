@@ -2,50 +2,156 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Face Detection Platform{% endblock %}</title>
+    <title>{% block title %}Платформа Распознавания Объектов{% endblock %}</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .sidebar {
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                background-color: #343a40;
+                color: #fff;
+                padding: 15px;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            }
+            .sidebar h3 {
+                color: #ffffff; /* белый цвет текста */
+                text-align: center; /* выравнивание текста по центру */
+                margin-bottom: 20px; /* отступ снизу */
+                font-size: 1.5em; /* размер шрифта */
+            }
+
+            .sidebar img {
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 15px;
+                border-radius: 50%;
+                border: 2px solid #fff;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            }
+            .sidebar .nav-link {
+                color: #fff;
+                margin: 5px 0;
+                padding: 10px;
+                border: 1px solid transparent;
+                border-radius: 5px;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+            .sidebar .nav-link:hover, .sidebar .nav-link.active {
+                background-color: #495057;
+                border-color: #007bff;
+            }
+            .main-content {
+                margin-left: 270px;
+                padding: 15px;
+                background: url("{% static 'background.jpg' %}") no-repeat center center fixed;
+                background-size: cover;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                flex-wrap: wrap;
+                color: #fff;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .content-container {
+                background-color: rgba(0, 0, 0, 0.5);
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+            h1 {
+                font-size: 3em;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            h2 {
+                font-size: 2em;
+                font-weight: bold;
+                text-align: left;
+                margin-bottom: 20px;
+            }
+            p {
+                font-size: 2em;
+                text-align: center;
+            }
+            .custom-form p {
+                font-size: 14px;
+                text-align: left;
+            }
+            header {
+                background-color: #343a40;
+                padding: 10px 0;
+            }
+            header .navbar-brand, header .nav-link {
+                color: #fff !important;
+            }
+            .card-header, .btn-primary {
+                background-color: #007bff;
+                color: #fff;
+            }
+            .btn-secondary {
+                background-color: #6c757d;
+                color: #fff;
+            }
+            .btn-danger {
+                background-color: #dc3545;
+                color: #fff;
+            }
+            .centered-link {
+                text-align: center;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+        </style>
 </head>
 <body>
-<header>
-    <!-- Bootstrap Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'object_detection:home' %}">Object Detection Platform</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'object_detection:home' %}">Home</a>
-                </li>
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'object_detection:dashboard' %}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'object_detection:logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'object_detection:login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'object_detection:register' %}">Register</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-</header>
-<main class="container mt-4">
-    {% block content %}{% endblock %}
+{% load static %}
+<div class="sidebar">
+    <h3>Платформа Распознавания Объектов "ПРО"</h3>
+    <img src="{% static 'logo2.jpg' %}" alt="Logo">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'object_detection:home' %}">Главная</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'object_detection:dashboard' %}">Дашборд</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'object_detection:logout' %}">Выйти</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'object_detection:login' %}">Войти</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'object_detection:register' %}">Зарегистрироваться</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+<main class="main-content">
+    <div class="content-container">
+        {% block content %}
+        {% endblock %}
+    </div>
 </main>
 <!-- Bootstrap and other dependencies should be loaded right before the closing body tag -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>

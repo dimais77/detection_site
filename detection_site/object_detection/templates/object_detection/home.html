@@ -1,7 +1,9 @@
 {% extends "object_detection/base.html" %}
 
 {% block content %}
-<h1>Welcome to the Object Detection Platform</h1>
-<p>This is the home page of your application.</p>
-<a href="{% url 'object_detection:dashboard' %}">Go to Dashboard</a>
+<h1>Добро пожаловать на платформу распознавания объектов</h1>
+<p>Главная страница</p>
+<div class="centered-link">
+    <a href="{% url 'object_detection:dashboard' %}" >Ваш дашборд</a>
+</div>
 {% endblock %}
