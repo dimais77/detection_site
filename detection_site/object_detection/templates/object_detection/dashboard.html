@@ -5,32 +5,46 @@
 <a href="{% url 'object_detection:add_image_feed' %}" class="btn btn-primary mb-3">Добавить изображение</a>
 <div class="row">
     {% for feed in image_feeds %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <a href="{% url 'object_detection:process_feed' feed.id %}" class="btn btn-secondary">Обработать</a>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <form action="{% url 'object_detection:process_feed' feed.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="model_type_{{ feed.id }}">Выбрать модель</label>
+                        <select name="model_type" id="model_type_{{ feed.id }}" class="form-control">
+                            <option value="local">Локальная модель</option>
+                            <option value="api">Модель API</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Обработать</button>
+                </form>
+
+                <a href="{{ feed.image.url }}" target="_blank">
+                    <img src="{{ feed.image.url }}" alt="Original Image" class="img-thumbnail" style="width: 50px; height: 50px;">
+                </a>
+                {% if feed.processed_image %}
+                <!-- Вывод обработанного изображения и результатов -->
+                <a href="{{ feed.processed_image.url }}" target="_blank">
+                    <img src="{{ feed.processed_image.url }}" alt="Processed Image" class="img-thumbnail" style="width: 50px; height: 50px;">
+                </a>
+                <ul class="list-unstyled mt-2">
+                    {% for obj in feed.detected_objects.all %}
+                    <li>{{ obj.object_type }} - {{ obj.confidence|floatformat:2 }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
             </div>
-            <a href="{{ feed.image.url }}" target="_blank">
-                <img src="{{ feed.image.url }}" alt="Original Image" class="img-thumbnail" style="width: 50px; height: 50px;">
-            </a>
-            {% if feed.processed_image %}
-            <a href="{{ feed.processed_image.url }}" target="_blank">
-                <img src="{{ feed.processed_image.url }}" alt="Processed Image" class="img-thumbnail" style="width: 50px; height: 50px;">
-            </a>
-            <ul class="list-unstyled mt-2">
-                {% for obj in feed.detected_objects.all %}
-                <li>{{ obj.object_type }} - {{ obj.confidence|floatformat:2 }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        <div class="card-footer">
-            <form action="{% url 'object_detection:delete_image' feed.id %}" method="post" class="d-inline">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Удалить</button>
-            </form>
+            <div class="card-footer">
+                <form action="{% url 'object_detection:delete_image' feed.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
         </div>
     </div>
     {% endfor %}
 </div>
 {% endblock %}
+
