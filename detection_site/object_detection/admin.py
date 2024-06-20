@@ -1,9 +1,7 @@
 from django.contrib import admin
+from .models import ImageFeed, DetectedObject, DescribedImage
 
-# Register your models here.
-from django.contrib import admin
-from .models import ImageFeed, DetectedObject
-
-admin.site.register(DetectedObject)
+# Регистрация моделей в административной панели Django
 admin.site.register(ImageFeed)
-
+admin.site.register(DetectedObject)
+admin.site.register(DescribedImage)

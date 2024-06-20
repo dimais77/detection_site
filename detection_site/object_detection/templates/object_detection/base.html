@@ -3,127 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Платформа Распознавания Объектов{% endblock %}</title>
-    <!-- Include Bootstrap CSS -->
+    <!-- Подключение Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% load static %}
-        <style>
-            body {
-                background-color: #f8f9fa;
-            }
-            .sidebar {
-                height: 100vh;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 250px;
-                background-color: #6c757d;
-                color: #fff;
-                padding: 15px;
-                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            }
-            .sidebar h3 {
-                color: #ffffff; /* белый цвет текста */
-                text-align: center; /* выравнивание текста по центру */
-                margin-bottom: 20px; /* отступ снизу */
-                font-size: 1.5em; /* размер шрифта */
-            }
-
-            .sidebar img {
-                max-width: 100%;
-                height: auto;
-                margin-bottom: 15px;
-<!--                border-radius: 50%;-->
-                border: 2px solid #fff;
-                box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            }
-            .sidebar .nav-link {
-                color: #fff;
-                margin: 5px 0;
-                padding: 10px;
-                border: 1px solid transparent;
-                border-radius: 5px;
-                transition: background-color 0.3s, border-color 0.3s;
-            }
-            .sidebar .nav-link:hover, .sidebar .nav-link.active {
-                background-color: #495057;
-                border-color: #007bff;
-            }
-            .main-content {
-                margin-left: 270px;
-                padding: 15px;
-                background: url("{% static 'background.jpg' %}") no-repeat center center fixed;
-                background-size: cover;
-                min-height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                flex-wrap: wrap;
-                color: #343a40;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            }
-            .content-container {
-                background-color: rgba(255, 255, 255, 0.8);
-                padding: 60px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            }
-            h1 {
-                font-size: 4em;
-                font-weight: bold;
-                text-align: center;
-                margin-bottom: 20px;
-            }
-            h2 {
-                font-size: 3em;
-                font-weight: bold;
-                text-align: left;
-                margin-bottom: 20px;
-            }
-            p {
-                font-size: 2em;
-                text-align: center;
-            }
-            .custom-form p {
-                font-size: 14px;
-                text-align: left;
-            }
-            header {
-                background-color: #343a40;
-                padding: 10px 0;
-            }
-            header .navbar-brand, header .nav-link {
-                color: #fff !important;
-            }
-            .card-header, .btn-primary {
-                background-color: #007bff;
-                color: #fff;
-            }
-            .btn-secondary {
-                background-color: #6c757d;
-                color: #fff;
-            }
-            .btn-danger {
-                background-color: #dc3545;
-                color: #fff;
-            }
-            .centered-link {
-                text-align: center;
-                font-size:1.5em;
-            }
-            .form-group {
-                margin-bottom: 20px;
-            }
-            .btn-yellow {
-                color: yellow;
-                font-size:1em;
-                padding-left: 10px;
-            }
-
-        </style>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-size: 16px; /* Основной размер шрифта */
+        }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: #6c757d;
+            color: #fff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            font-size: 1rem; /* Размер шрифта */
+        }
+        .sidebar h3 {
+            color: #ffffff; /* Цвет текста */
+            text-align: center; /* Выравнивание текста по центру */
+            margin-bottom: 20px; /* Отступ снизу */
+            font-size: 1.5rem; /* Размер шрифта */
+        }
+        .sidebar img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .sidebar .nav-link {
+            color: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: background-color 0.3s, border-color 0.3s;
+            font-size: 1rem; /* Размер шрифта */
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: #495057;
+            border-color: #007bff;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 15px;
+            background: url("{% static 'background.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+            color: #343a40;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 1rem; /* Размер шрифта */
+        }
+        .content-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 100%; /* Ширина контейнера */
+            max-width: 800px; /* Максимальная ширина контейнера */
+            margin: auto; /* Центрирование контейнера */
+            font-size: 1rem; /* Размер шрифта */
+        }
+        h1 {
+            font-size: 2.5rem; /* Размер шрифта для h1 */
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2rem; /* Размер шрифта для h2 */
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5rem; /* Размер шрифта для p */
+            text-align: center;
+        }
+        p2 {
+            font-size: 1.5rem; /* Размер шрифта для p2 */
+            text-align: left;
+        }
+        .custom-form p {
+            font-size: 0.875rem; /* Размер шрифта для формы */
+            text-align: left;
+        }
+        header {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        header .navbar-brand, header .nav-link {
+            color: #fff !important;
+        }
+        .card-header, .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .centered-link {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-yellow {
+            color: yellow;
+            font-size: 1rem;
+            padding-left: 10px;
+        }
+        .card-body {
+            font-size: 1rem; /* Размер шрифта */
+        }
+        .btn {
+            font-size: 1rem; /* Размер шрифта кнопок */
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-{% load static %}
 <div class="sidebar">
     <h3>Платформа Распознавания Объектов "ПРО"</h3>
     <img src="{% static 'logo2.jpg' %}" alt="Logo">
@@ -155,7 +185,8 @@
         {% endblock %}
     </div>
 </main>
-<!-- Bootstrap and other dependencies should be loaded right before the closing body tag -->
+
+<!-- Подключение Bootstrap и других зависимостей -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -164,5 +195,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
+<script src="{% static 'object_detection/loader.js' %}?v={{ STATIC_VERSION }}"></script>
 </body>
 </html>

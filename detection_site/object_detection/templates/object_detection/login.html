@@ -2,11 +2,14 @@
 
 {% block content %}
 <h2>Вход</h2>
+<!-- Форма входа пользователя -->
 <form method="post" class="my-4 custom-form">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary mt-2">Войти</button>
 </form>
-<a href="{% url 'object_detection:register' %}">Зарегистрироваться</a>
-<a href="{% url 'object_detection:password_reset' %}">Забыли пароль?</a>
+<div class="custom-form p">
+    <p><a href="{% url 'object_detection:register' %}">Зарегистрироваться</a></p>
+    <p><a href="{% url 'object_detection:password_reset' %}">Забыли пароль?</a></p>
+</div>
 {% endblock %}
