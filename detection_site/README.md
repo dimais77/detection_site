@@ -67,6 +67,13 @@ source venv/bin/activate  # для Windows используйте `venv\Scripts\
 ```bash
 pip install -r requirements.txt
 ```
+Дополнительно создайте у себя файл `.env` для хранения переменных и ключей:  
+SECRET_KEY='SECRET_KEY'  
+HUGGINGFACE_API_KEY=HUGGINGFACE_API_KEY  
+DEBUG=False # SECURITY WARNING: don't run with debug turned on in production!  
+ALLOWED_HOSTS=127.0.0.1,localhost  
+HF_API_TOKEN=HF_API_TOKEN  
+
 
 4. Примените миграции:
 
@@ -102,11 +109,6 @@ python manage.py runserver
 - Frontend: Bootstrap
 - Модели: MobileNet SSD, BLIP
 
-## Тестирование
-Для запуска тестов выполните следующую команду:
-```bash
-python manage.py test  
-```
 
 ## Вклад
 
