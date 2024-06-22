@@ -4,8 +4,8 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import ImageFeed, DetectedObject, DescribedImage
 
-
 User = get_user_model()
+
 
 class ImageFeedTests(TestCase):
     def setUp(self):
@@ -23,6 +23,7 @@ class ImageFeedTests(TestCase):
         image_feed.delete()
         self.assertFalse(os.path.exists(image_path))
 
+
 class DetectedObjectTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='password12345')
@@ -38,6 +39,7 @@ class DetectedObjectTests(TestCase):
         )
         self.assertEqual(detected_object.object_type, 'cat')
         self.assertEqual(detected_object.confidence, 0.95)
+
 
 class DescribedImageTests(TestCase):
     def setUp(self):

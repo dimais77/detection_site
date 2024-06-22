@@ -1,15 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from .models import ImageFeed, DetectedObject, DescribedImage
 from .utils import process_image
 from .forms import ImageFeedForm, CustomUserCreationForm
 
+
 # Главная страница
 def home(request):
     return render(request, 'object_detection/home.html')
+
 
 # Регистрация нового пользователя
 def register(request):
@@ -23,6 +25,7 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'object_detection/register.html', {'form': form})
 
+
 # Вход пользователя
 def user_login(request):
     if request.method == 'POST':
@@ -35,11 +38,13 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request, 'object_detection/login.html', {'form': form})
 
+
 # Выход пользователя (доступно только авторизованным пользователям)
 @login_required
 def user_logout(request):
     logout(request)
     return redirect('object_detection:login')
+
 
 # Личный кабинет (доступно только авторизованным пользователям)
 @login_required
@@ -53,6 +58,7 @@ def dashboard(request):
         'describe_images': describe_images
     })
 
+
 # Обработка изображения (доступно только авторизованным пользователям)
 @login_required
 def process_image_feed(request, feed_id):
@@ -63,6 +69,7 @@ def process_image_feed(request, feed_id):
         return redirect('object_detection:dashboard')
     else:
         return redirect('object_detection:dashboard')
+
 
 # Добавление нового изображения (доступно только авторизованным пользователям)
 @login_required
@@ -78,12 +85,14 @@ def add_image_feed(request):
         form = ImageFeedForm()
     return render(request, 'object_detection/add_image_feed.html', {'form': form})
 
+
 # Удаление изображения (доступно только авторизованным пользователям)
 @login_required
 def delete_image(request, image_id):
     image = get_object_or_404(ImageFeed, id=image_id, user=request.user)
     image.delete()
     return redirect('object_detection:dashboard')
+
 
 # Сброс пароля (начало процесса)
 def password_reset(request):
@@ -101,14 +110,16 @@ def password_reset(request):
         form = auth_views.PasswordResetForm()
     return render(request, 'object_detection/password_reset.html', {'form': form})
 
+
 # Завершение сброса пароля
 def password_reset_done(request):
     return render(request, 'object_detection/password_reset_done.html')
 
+
 # Подтверждение сброса пароля
 def password_reset_confirm(request, uidb64=None, token=None):
     return render(request, 'object_detection/password_reset_confirm.html')
-    # return auth_views.PasswordResetConfirmView.as_view(template_name='object_detection/password_reset_confirm.html')(request, uidb64=uidb64, token=token)
+
 
 # Завершение процесса сброса пароля
 def password_reset_complete(request):

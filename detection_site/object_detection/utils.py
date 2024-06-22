@@ -13,6 +13,7 @@ VOC_LABELS = [
     "sheep", "sofa", "train", "tvmonitor"
 ]
 
+
 # Обработка изображения в зависимости от выбранной модели
 def process_image(image_feed_id, model_type=None):
     try:
