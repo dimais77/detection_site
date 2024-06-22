@@ -107,7 +107,8 @@ def password_reset_done(request):
 
 # Подтверждение сброса пароля
 def password_reset_confirm(request, uidb64=None, token=None):
-    return auth_views.PasswordResetConfirmView.as_view(template_name='object_detection/password_reset_confirm.html')(request, uidb64=uidb64, token=token)
+    return render(request, 'object_detection/password_reset_confirm.html')
+    # return auth_views.PasswordResetConfirmView.as_view(template_name='object_detection/password_reset_confirm.html')(request, uidb64=uidb64, token=token)
 
 # Завершение процесса сброса пароля
 def password_reset_complete(request):
