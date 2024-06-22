@@ -11,6 +11,7 @@ class UserRegistrationTests(TestCase):
         url = reverse('object_detection:register')  # Убедитесь, что это правильный URL для регистрации
         data = {
             'username': 'testuser',
+            'email': 'testemail@mail.com',
             'password1': 'testpassword',
             'password2': 'testpassword',
         }

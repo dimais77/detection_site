@@ -20,8 +20,10 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = [
+urlpatterns = ([
                   path('admin/', admin.site.urls),
                   path('object_detection/', include('object_detection.urls')),
                   path('', RedirectView.as_view(url='/object_detection/', permanent=True)),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ]
+               + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))

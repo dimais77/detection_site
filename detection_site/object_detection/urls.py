@@ -23,4 +23,4 @@ urlpatterns = [
     path('password_reset_done/', password_reset_done, name='password_reset_done'),  # Завершение сброса пароля
     path('reset/<uidb64>/<token>/', password_reset_confirm, name='password_reset_confirm'),  # Подтверждение сброса пароля
     path('reset/done/', password_reset_complete, name='password_reset_complete'),  # Завершение процесса сброса пароля
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
