@@ -1,0 +1,66 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Дашборд</h2>
+<a href="{% url 'object_detection:add_image_feed' %}" class="btn btn-primary mb-3">Добавить изображение</a>
+{% load static %}
+{% load custom_filters %}
+
+<div class="row">
+    {% for feed in image_feeds %}
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <!-- Форма для выбора модели и обработки изображения -->
+                <form action="{% url 'object_detection:process_feed' feed.id %}" method="post"
+                      class="d-inline process-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="model_type_{{ feed.id }}">Выбрать модель</label>
+                        <select name="model_type" id="model_type_{{ feed.id }}" class="form-control">
+                            <option value="model_1">Объекты на изображении</option>
+                            <option value="model_2">Описание изображения</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary process-button">Обработать</button>
+                    <div class="loader" style="display: none;"></div>
+                </form>
+                <!-- Ссылки на оригинальное и обработанное изображения -->
+                <a href="{{ feed.image.url }}" target="_blank">
+                    <img src="{{ feed.image.url }}" alt="Original Image" class="img-thumbnail"
+                         style="width: 50px; height: 50px;">
+                </a>
+                {% if feed.processed_image %}
+                <a href="{{ feed.processed_image.url }}" target="_blank">
+                    <img src="{{ feed.processed_image.url }}" alt="Processed Image" class="img-thumbnail"
+                         style="width: 50px; height: 50px;">
+                </a>
+                {% endif %}
+                <!-- Список распознанных объектов и описаний изображения -->
+                <ul>
+                    {% for obj in detected_objects %}
+                    {% if obj.image_feed.id == feed.id %}
+                    <li>{{ obj.object_type }} ({{ obj.confidence|to_percentage }})</li>
+                    {% endif %}
+                    {% endfor %}
+                    {% for desc in describe_images %}
+                    {% if desc.image_feed.id == feed.id %}
+                    <li>{{ desc.describe }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Кнопка для удаления изображения -->
+            <div class="card-footer">
+                <form action="{% url 'object_detection:delete_image' feed.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+<script src="{% static 'object_detection/loader.js' %}?v={{ STATIC_VERSION }}"></script>

@@ -1,0 +1,12 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<h2>Регистрация пользователя</h2>
+<!-- Форма регистрации нового пользователя -->
+<form method="post" class="my-4 custom-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary mt-2">Зарегистрироваться</button>
+</form>
+<a href="{% url 'object_detection:login' %}">Войти</a>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<h1>Добро пожаловать на платформу распознавания объектов "ПРО"</h1>
+<p>Это полнофункциональное приложение для выполнения задач по обнаружению объектов на изображениях</p>
+<div class="centered-link">
+    <a href="{% url 'object_detection:dashboard' %}">Ваш дашборд</a>
+</div>
+{% endblock %}
